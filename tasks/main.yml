@@ -1,0 +1,17 @@
+---
+# Kevin M. Meziere <kmeziere@jpcatholic.com>
+# Copyright 2015, John Paul the Great Catholic University
+
+- name: Lookup version of Jingles
+  shell: pkgin list | grep fifo-jingles | awk '{print $1}'
+  register: jingles_version_installed
+  changed_when: jingles_version_installed.stdout != '{{jingles_version_required}}'
+  ignore_errors: True
+
+- name: Install/Upgrade Jingles
+  command: pkg_add -u http://release.project-fifo.net/pkg/'{{jingles_release}}'/'{{jingles_version_required}}'.tgz 
+  when: jingles_version_installed.stdout != '{{jingles_version_required}}'
+
+- name: Enable Jingles
+  service: name=wiggle state=started enabled=yes
+  when: "'jingles_no_start' not in group_names"
