@@ -10,7 +10,7 @@
 
 - name: Install/Upgrade Jingles
   command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ jingles_release }}'/'{{ jingles_version_required }}'.tgz "
-  when: jingles_version_installed.stdout != "{{ jingles_version_required }}""
+  when: jingles_version_installed.stdout != "{{ jingles_version_required }}"
 
 - name: Enable Jingles
   service: name=wiggle state=started enabled=yes
