@@ -12,6 +12,10 @@
   command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ jingles_release }}'/'{{ jingles_version_required }}'.tgz "
   when: jingles_version_installed.stdout != "{{ jingles_version_required }}"
 
+- name: Configure Howl
+  template: src=nginx-config.j2 dest=/opt/local/etc/nginx/nginx.conf backup=yes
+  notify: Bounce Howl
+
 - name: Enable Jingles
-  service: name=jingles state=started enabled=yes
+  service: name=nginx state=started enabled=yes
   when: "'jingles_no_start' not in {{ group_names }}"
