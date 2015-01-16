@@ -13,5 +13,5 @@
   when: jingles_version_installed.stdout != "{{ jingles_version_required }}"
 
 - name: Enable Jingles
-  service: name=wiggle state=started enabled=yes
+  service: name=jingles state=started enabled=yes
   when: "'jingles_no_start' not in {{ group_names }}"
