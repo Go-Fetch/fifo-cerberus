@@ -2,6 +2,6 @@
 # Kevin M. Meziere <kmeziere@jpcatholic.com>
 # Copyright 2015, John Paul the Great Catholic University
 
-jingles_release: rel
-jingles_version_required: fifo-cerberus-0.7.0p6
+cerberus_release: rel
+cerberus_version_required: fifo-cerberus-0.7.0p6
 fifo_gpg_keyid: BB975564

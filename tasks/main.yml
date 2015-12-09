@@ -2,10 +2,10 @@
 # Kevin M. Meziere <kmeziere@jpcatholic.com>
 # Copyright 2015, John Paul the Great Catholic University
 
-- name: Lookup version of Jingles
-  shell: "pkgin list | grep fifo-jingles | awk '{print $1}'"
-  register: jingles_version_installed
-  changed_when: "jingles_version_installed.stdout != '{{ jingles_version_required }}'"
+- name: Lookup version of Cerberus
+  shell: "pkgin list | grep fifo-cerberus | awk '{print $1}'"
+  register: cerberus_version_installed
+  changed_when: "cerberus_version_installed.stdout != '{{ cerberus_version_required }}'"
   ignore_errors: True
 
 - name: Check for Project Fifo GPG Key
@@ -13,12 +13,12 @@
   register: fifo_gpg_key
   changed_when: fifo_gpg_key.rc != 0
   ignore_errors: True
-  when: jingles_version_installed.stdout != "{{ jingles_version_required }}"
+  when: cerberus_version_installed.stdout != "{{ cerberus_version_required }}"
 
 - name: Install Project Fifo GPG Key
   shell: "curl https://project-fifo.net/fifo.gpg | gpg --primary-keyring /opt/local/etc/gnupg/pkgsrc.gpg --import"
   when: fifo_gpg_key.rc != 0
 
-- name: Install/Upgrade Jingles
-  command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ jingles_release }}'/'{{ jingles_version_required }}'.tgz "
-  when: jingles_version_installed.stdout != "{{ jingles_version_required }}"
+- name: Install/Upgrade Cerberus
+  command: "pkg_add -u http://release.project-fifo.net/pkg/'{{ cerberus_release }}'/'{{ cerberus_version_required }}'.tgz "
+  when: cerberus_version_installed.stdout != "{{ cerberus_version_required }}"
